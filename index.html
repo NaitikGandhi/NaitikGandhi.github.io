@@ -1,321 +1,538 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naitik Gandhi - Software Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-        }
-        .bg-gradient {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        }
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        }
-        .transition-transform {
-            transition: transform 0.3s ease-in-out;
-        }
-        .hover\:scale-105:hover {
-            transform: scale(1.05);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naitik Gandhi | Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root{
+      --bg0:#070a12;
+      --bg1:#0b1220;
+      --card:#0b1220cc;
+      --stroke:#ffffff14;
+      --stroke2:#ffffff24;
+      --text:#e7ecff;
+      --muted:#a8b3d4;
+      --accent:#7aa2ff;
+      --accent2:#a78bfa;
+    }
+
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, #17255455 0%, transparent 60%),
+                  radial-gradient(900px 700px at 80% 20%, #4c1d9550 0%, transparent 55%),
+                  radial-gradient(1000px 800px at 20% 35%, #0ea5e930 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      overflow-x:hidden;
+    }
+
+    /* subtle animated "code" background */
+    .bg-grid{
+      position:fixed; inset:0; z-index:-3;
+      background-image:
+        linear-gradient(to right, #ffffff08 1px, transparent 1px),
+        linear-gradient(to bottom, #ffffff08 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(600px 300px at 50% 10%, #000 35%, transparent 70%);
+      opacity:.35;
+    }
+
+    .symbols{
+      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      opacity:.22;
+      filter: blur(0px);
+    }
+    .sym{
+      position:absolute;
+      font-weight:600;
+      color:#c7d2fe;
+      opacity:.18;
+      animation: floaty linear infinite;
+      text-shadow: 0 0 18px rgba(122,162,255,.15);
+      user-select:none;
+      white-space:nowrap;
+    }
+    @keyframes floaty{
+      from{ transform: translate3d(0, 18px, 0); }
+      to  { transform: translate3d(0, -28px, 0); }
+    }
+
+    .glass{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .hero-title{
+      background: linear-gradient(135deg, #c7d2fe 0%, #7aa2ff 40%, #a78bfa 100%);
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Hover lift (kept), NO pointer glow */
+    .hover-lift{
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+      will-change: transform;
+    }
+    .hover-lift:hover{
+      transform: translateY(-6px);
+      border-color: var(--stroke2);
+      box-shadow: 0 22px 70px rgba(0,0,0,.45);
+    }
+
+    .chip{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      transition: transform .2s ease, border-color .2s ease, color .2s ease, background-color .2s ease;
+    }
+    .chip:hover{
+      transform: translateY(-2px);
+      border-color: var(--stroke2);
+      color:#dbe4ff;
+      background: rgba(122,162,255,.08);
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      color: #e8eeff;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      border-color: var(--stroke2);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(122,162,255,.95), rgba(167,139,250,.95));
+      border-color: transparent;
+      color:#0b1220;
+      font-weight: 600;
+    }
+    .btn-primary:hover{
+      filter: brightness(1.05);
+    }
+
+    .logo-pill{
+      height: 56px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      padding: 10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      overflow:hidden;
+    }
+    .logo-pill img{
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+      filter: none; /* keep colorful */
+    }
+
+    /* Section heading icon */
+    .hicon{
+      width:18px; height:18px; opacity:.9;
+      filter: drop-shadow(0 0 14px rgba(122,162,255,.15));
+    }
+
+    /* Smooth anchor offset for fixed header */
+    section{ scroll-margin-top: 90px; }
+  </style>
 </head>
+
 <body class="antialiased">
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 backdrop-blur-sm shadow-sm">
-        <nav class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gradient">Naitik Gandhi</h1>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">About</a>
-                    <a href="#experience" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Experience</a>
-                    <a href="#projects" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Projects</a>
-                    <a href="#skills" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Skills</a>
-                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Contact</a>
-                </div>
-                <button id="menuButton" class="md:hidden text-gray-600 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </button>
-            </div>
+  <div class="bg-grid"></div>
+
+  <div class="symbols" aria-hidden="true" id="symbols">
+    <div class="sym" style="left:6%; top:14%; font-size:18px; animation-duration:5.8s">{ }</div>
+    <div class="sym" style="left:18%; top:72%; font-size:22px; animation-duration:6.6s">;</div>
+    <div class="sym" style="left:28%; top:22%; font-size:20px; animation-duration:7.2s">&lt;/&gt;</div>
+    <div class="sym" style="left:42%; top:64%; font-size:18px; animation-duration:6.1s">()</div>
+    <div class="sym" style="left:54%; top:18%; font-size:22px; animation-duration:7.9s">=&gt;</div>
+    <div class="sym" style="left:66%; top:72%; font-size:18px; animation-duration:5.9s">[]</div>
+    <div class="sym" style="left:78%; top:26%; font-size:22px; animation-duration:7.0s">#</div>
+    <div class="sym" style="left:88%; top:66%; font-size:18px; animation-duration:6.8s">&&</div>
+  </div>
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="mt-4 glass rounded-2xl px-4 py-3 flex items-center justify-between">
+        <a href="#top" class="text-sm tracking-wide text-slate-200 hover:text-white transition">
+          Naitik Gandhi
+        </a>
+
+        <nav class="hidden md:flex items-center gap-5 text-sm text-slate-300">
+          <a class="hover:text-white transition" href="#about">About</a>
+          <a class="hover:text-white transition" href="#experience">Experience</a>
+          <a class="hover:text-white transition" href="#projects">Projects</a>
+          <a class="hover:text-white transition" href="#skills">Skills</a>
+          <a class="hover:text-white transition" href="#achievements">Achievements</a>
+          <a class="hover:text-white transition" href="#contact">Contact</a>
         </nav>
-        <div id="mobileMenu" class="hidden md:hidden bg-white">
-            <div class="container mx-auto px-6 py-3 flex flex-col space-y-2">
-                <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">About</a>
-                <a href="#experience" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Experience</a>
-                <a href="#projects" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Projects</a>
-                <a href="#skills" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Skills</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-600 transition-colors duration-200">Contact</a>
-            </div>
+
+        <button id="menuBtn" class="md:hidden btn px-3 py-2" aria-label="Open menu">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="mobileMenu" class="hidden md:hidden mt-2 glass rounded-2xl px-4 py-3">
+        <div class="flex flex-col gap-2 text-sm text-slate-300">
+          <a class="hover:text-white transition" href="#about">About</a>
+          <a class="hover:text-white transition" href="#experience">Experience</a>
+          <a class="hover:text-white transition" href="#projects">Projects</a>
+          <a class="hover:text-white transition" href="#skills">Skills</a>
+          <a class="hover:text-white transition" href="#achievements">Achievements</a>
+          <a class="hover:text-white transition" href="#contact">Contact</a>
         </div>
-    </header>
-    <main class="container mx-auto px-6 pt-24">
-        <section id="hero" class="min-h-screen flex items-center justify-center">
-            <div class="text-center">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4 text-gradient animate-fade-in-down">Naitik Gandhi</h1>
-                <p class="text-xl md:text-2xl mb-8 animate-fade-in-up max-w-2xl mx-auto text-gray-600">
-                    Aspiring Software Engineer | Master's Student at Arizona State University
-                </p>
-                <a href="#contact" class="bg-gradient text-white px-6 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition-opacity duration-200 animate-pulse">Get in Touch</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="mx-auto max-w-6xl px-5 pt-28 pb-20">
+    <!-- Hero -->
+    <section class="mt-3">
+      <div class="glass rounded-3xl px-6 py-14 md:px-12 md:py-16">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="hero-title text-5xl md:text-7xl font-bold tracking-tight">
+            Naitik Gandhi
+          </h1>
+
+          <p class="mt-5 text-lg md:text-xl text-slate-300">
+            Software Engineer | Backend, Distributed Systems, AI/ML | MS CS @ ASU
+          </p>
+
+          <!-- Logos (no text beside logos) -->
+          <div class="mt-8 flex flex-col md:flex-row items-center justify-center gap-3">
+            <div class="logo-pill hover-lift w-full md:w-[220px]">
+              <img src="ASU-logo.png" alt="Arizona State University logo" />
             </div>
-        </section>
-        <section id="about" class="py-20">
-            <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
-                <div class="w-full md:w-1/3" data-aos="fade-right">
-                    <img src="IMG_5811.JPG" alt="Naitik Gandhi" class="w-full rounded-lg shadow-2xl transition-transform hover:scale-105 duration-300">
-                </div>
-                <div class="w-full md:w-2/3" data-aos="fade-left">
-                    <h2 class="text-4xl font-bold mb-6 text-gradient">About Me</h2>
-                    <p class="text-xl mb-6 text-gray-600">
-                        Hello! I'm Naitik, a passionate Software Engineer currently pursuing my Master's in Computer Science at Arizona State University. With a strong foundation in various programming languages and frameworks, I'm constantly seeking new challenges and opportunities to grow in the ever-evolving tech landscape.
-                    </p>
-                    <p class="text-xl mb-6 text-gray-600">
-                        My journey in tech has been exciting, from developing scalable Java applications to exploring the realms of machine learning and computer vision. I'm eager to apply my skills and knowledge to innovative projects and contribute to cutting-edge technologies.
-                    </p>
-                    <p class="text-xl mb-6 text-gray-600">
-                        When I'm not coding, you can find me exploring the latest tech trends, playing chess, participating in hackathons, or enjoying a rich chocolate milkshake while brainstorming new ideas.
-                    </p>
-                </div>
+            <div class="logo-pill hover-lift w-full md:w-[220px]">
+              <img src="SS.png" alt="State Street logo" />
             </div>
-        </section>
-        <section id="experience" class="py-20">
-            <h2 class="text-4xl font-bold mb-6 text-gradient">Professional Experience</h2>
-            <div class="space-y-12">
-                <div class="bg-white rounded-lg p-6 shadow-lg transition-all duration-300 transform hover:scale-105" data-aos="fade-up">
-                    <h3 class="text-2xl font-semibold mb-2">Senior Software Engineer</h3>
-                    <p class="text-xl text-blue-600">State Street</p>
-                    <p class="text-gray-600 mb-4">July 2022 – June 2024 | Hyderabad, India</p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-600">
-                        <li>Spearheaded development as Java Backend Engineer for the Robotic Process Automation team</li>
-                        <li>Engineered scalable Java-based web application, reducing manual intervention by 30%</li>
-                        <li>Developed RESTful APIs using Spring Boot, improving service communication across microservices</li>
-                        <li>Elevated code quality, achieving 80% code coverage and enhancing system robustness</li>
-                        <li>Designed a scalable backend system using TOAD for Oracle, boosting data processing efficiency by 25%</li>
-                    </ul>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-2xl font-semibold mb-2">Software Developer Intern</h3>
-                    <p class="text-xl text-blue-600">State Street</p>
-                    <p class="text-gray-600 mb-4">January 2022 – June 2022 | Hyderabad, India</p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-600">
-                        <li>Created a Rest-Services project, implementing CRUD operations via Spring Boot</li>
-                        <li>Integrated backend dashboards with RESTful API calls, enhancing user data visualization</li>
-                        <li>Scripted Unit Test Cases, achieving 95% code coverage and reducing post-deployment issues by 60%</li>
-                    </ul>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-2xl font-semibold mb-2">Data Science Trainee</h3>
-                    <p class="text-xl text-blue-600">Nuclei Technologies</p>
-                    <p class="text-gray-600 mb-4">June 2021 – July 2021 | Ahmedabad, India</p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-600">
-                        <li>Conceptualized the Product Manager Dashboard for real-time sales data visualization</li>
-                        <li>Applied and improved regression and classification models, boosting sales forecasting accuracy by 10%</li>
-                        <li>Fine-tuned a Decision Tree Model on Big Mart sales data, increasing forecast accuracy by 20%</li>
-                    </ul>
-                </div>
+            <div class="logo-pill hover-lift w-full md:w-[220px]">
+              <img src="ITNU.png" alt="Nirma University logo" />
             </div>
-        </section>
-        <section id="projects" class="py-20">
-            <h2 class="text-4xl font-bold mb-6 text-gradient">Notable Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-lg p-6 shadow-lg transition-all duration-300 transform hover:scale-105" data-aos="fade-up">
-                    <h3 class="text-2xl font-semibold mb-2">Pulmonary Disease Prediction</h3>
-                    <p class="text-gray-600 mb-4">Collaborated on medical image processing research, achieving 92% accuracy in disease prediction using deep learning and transfer learning from VGG19.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Python</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">TensorFlow</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Computer Vision</span>
-                    </div>
-                    <a href="#" class="text-blue-600 hover:underline">Learn More →</a>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-2xl font-semibold mb-2">E-Commerce Web Application</h3>
-                    <p class="text-gray-600 mb-4">Developed a full-stack e-commerce platform with a RESTful API backend using Node.js and Express, and a React-based frontend for seamless user experience.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">JavaScript</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">React</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Node.js</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Express</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">MongoDB</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">AWS S3</span>
-                    </div>
-                    <a href="#" class="text-blue-600 hover:underline">Learn More →</a>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-2xl font-semibold mb-2">Human Hand Motion Gesture Control</h3>
-                    <p class="text-gray-600 mb-4">Developed a Real-Time Hand Gesture Recognition System using Python, OpenCV, and Mediapipe to detect and track 21 3-D hand landmarks with 90% accuracy.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Python</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">OpenCV</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">MediaPipe</span>
-                    </div>
-                    <a href="#" class="text-blue-600 hover:underline">Learn More →</a>
-                </div>
-            </div>
-        </section>
-        <section id="skills" class="py-20">
-            <h2 class="text-4xl font-bold mb-6 text-gradient">Technical Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4">Languages</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Java</span>
-                        <span class="bg-blue-100 text-blue-800 px-2  py-1 rounded-full text-sm">C++</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Python</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">SQL</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">JavaScript</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">R</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">MATLAB</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">HTML/CSS</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4">Frameworks/Libraries</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Spring Boot</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Node.js</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Express</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">React.js</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">TensorFlow</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Sci-kit Learn</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">OpenCV</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Terraform</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4">Developer Tools/Databases</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">PostgreSQL</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">MongoDB</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Docker</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Google Spanner</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">CockroachDB</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">MySQL</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">TOAD</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Oracle SQL</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4">Cloud Platforms</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Amazon Web Services (AWS)</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Google Cloud Platform (GCP)</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4">Version Control</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Git</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4">Operating Systems</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Linux</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="education" class="py-20">
-            <h2 class="text-4xl font-bold mb-6 text-gradient">Education</h2>
-            <div class="space-y-8">
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-2">Master of Science in Computer Science</h3>
-                    <p class="text-xl text-blue-600">Arizona State University</p>
-                    <p class="text-gray-600 mb-4">August 2024 – Present | Tempe, AZ</p>
-                    <p class="text-gray-600">Coursework: Artificial Intelligence, Distributed Database System, Foundations of Algorithms</p>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-2">Bachelor of Technology in Electrical Engineering</h3>
-                    <p class="text-xl text-blue-600">Nirma University</p>
-                    <p class="text-gray-600 mb-4">August 2018 – May 2022 | Ahmedabad, India</p>
-                    <p class="text-gray-600">Minor Specialization in Computer Engineering</p>
-                    <p class="text-gray-600">Coursework: Database Management Systems, Operating Systems, Data Structures, Scientific Programming</p>
-                </div>
-            </div>
-        </section>
-        <section id="contact" class="py-20">
-            <h2 class="text-4xl font-bold mb-6 text-gradient">Get in Touch</h2>
-            <div class="bg-white rounded-lg p-6 shadow-lg" data-aos="fade-up">
-                <div class="flex flex-col space-y-4">
-                    <a href="mailto:naitikg2910@gmail.com" class="flex items-center space-x-2 text-xl hover:text-blue-600 transition-colors duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <span>naitikg2910@gmail.com</span>
-                    </a>
-                    <a href="tel:+16232919648" class="flex items-center space-x-2 text-xl hover:text-blue-600 transition-colors duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        <span>+1 (623) 291-9648</span>
-                    </a>
-                    <a href="https://linkedin.com/in/naitikgandhi/" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 text-xl hover:text-blue-600 transition-colors duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                        </svg>
-                        <span>linkedin.com/in/naitik</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-    <!-- <footer class="bg-gradient text-white py-6 mt-20">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2024 Naitik Gandhi. All rights reserved.</p>
+          </div>
+
+          <div class="mt-4 text-sm text-slate-400">
+            Arizona State University • State Street • Nirma University
+          </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="#projects" class="btn btn-primary hover-lift w-full sm:w-auto">View Projects</a>
+            <a href="#contact" class="btn hover-lift w-full sm:w-auto">Get in Touch</a>
+          </div>
+
+          <div class="mt-10 text-sm text-slate-400">
+            Building reliable services • Distributed systems • Graph + LLM apps
+          </div>
         </div>
-    </footer> -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            gsap.registerPlugin(ScrollTrigger);
+      </div>
+    </section>
 
-            const menuButton = document.getElementById('menuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            menuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
+    <!-- About -->
+    <section id="about" class="mt-14">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-4 glass rounded-3xl p-5 hover-lift">
+          <img src="IMG_5811.JPG" alt="Naitik Gandhi" class="rounded-2xl w-full object-cover border border-white/10" />
+        </div>
 
-            // Animate sections on scroll
-            gsap.utils.toArray('section').forEach(section => {
-                gsap.from(section, {
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        end: "bottom 20%",
-                        toggleActions: "play none none reverse"
-                    }
-                });
-            });
+        <div class="md:col-span-8 glass rounded-3xl p-7 md:p-8 hover-lift">
+          <div class="flex items-center gap-2">
+            <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" d="M12 20h9" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+            </svg>
+            <h2 class="text-2xl md:text-3xl font-semibold">About</h2>
+          </div>
 
-            // Animate hero text
-            gsap.from("#hero h1", { opacity: 0, y: -50, duration: 1, delay: 0.5 });
-            gsap.from("#hero p", { opacity: 0, y: 50, duration: 1, delay: 0.7 });
-            gsap.from("#hero a", { opacity: 0, y: 50, duration: 1, delay: 0.9 });
+          <p class="mt-4 text-slate-300 leading-relaxed">
+            I’m a Master’s student in Computer Science at Arizona State University (2024–2026) with a backend-heavy background from State Street.
+            I enjoy building production-grade services (Java/Spring), working on distributed systems (RAFT/sharding), and experimenting with AI systems like GraphRAG + knowledge graphs.
+          </p>
 
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-        });
-    </script>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="chip">Java / Spring Boot / Spring MVC</span>
+            <span class="chip">Distributed Systems</span>
+            <span class="chip">Linux + Debugging</span>
+            <span class="chip">SQL / PostgreSQL / MySQL</span>
+            <span class="chip">Neo4j + GraphRAG</span>
+            <span class="chip">AWS / GCP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="mt-14">
+      <div class="flex items-center gap-2">
+        <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 7V5a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v2" />
+          <rect x="4" y="7" width="16" height="14" rx="2" />
+          <path stroke-linecap="round" d="M9 12h6M9 16h6" />
+        </svg>
+        <h2 class="text-2xl md:text-3xl font-semibold">Experience</h2>
+      </div>
+
+      <div class="mt-6 space-y-6">
+        <div class="glass rounded-3xl p-7 hover-lift">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <div class="text-xl font-semibold">Senior Software Engineer · State Street</div>
+              <div class="text-slate-400">Hyderabad, India</div>
+            </div>
+            <div class="text-slate-400">04/2023 – 06/2024</div>
+          </div>
+          <ul class="mt-4 list-disc list-inside text-slate-300 space-y-2">
+            <li>Designed and scaled an internal automation tool using Java–Spring Boot with Spring MVC microservices.</li>
+            <li>Optimized SQL queries and schema models in Oracle TOAD to reduce batch latency and improve reliability.</li>
+            <li>Built a centralized configuration service using Spring Cloud Config to streamline deployments.</li>
+            <li>Improved runtime performance with caching, batching, and thread-level optimizations.</li>
+            <li>Mentored junior engineers on backend architecture, debugging practices, and Git workflows.</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-3xl p-7 hover-lift">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <div class="text-xl font-semibold">Software Engineer · State Street</div>
+              <div class="text-slate-400">Hyderabad, India</div>
+            </div>
+            <div class="text-slate-400">07/2022 – 03/2023</div>
+          </div>
+          <ul class="mt-4 list-disc list-inside text-slate-300 space-y-2">
+            <li>Developed REST APIs and modular backend components in Spring Boot with clean OOP design.</li>
+            <li>Built backend modules and improved data processing workflows using Oracle TOAD.</li>
+            <li>Supported Agile SDLC workflows: high-priority JIRA issues, releases, and CI/CD stability.</li>
+            <li>Promoted to Senior Associate within nine months after delivering key solutions and leading cross-functional delivery.</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-3xl p-7 hover-lift">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <div class="text-xl font-semibold">Software Developer Intern · State Street</div>
+              <div class="text-slate-400">Hyderabad, India</div>
+            </div>
+            <div class="text-slate-400">01/2022 – 06/2022</div>
+          </div>
+          <ul class="mt-4 list-disc list-inside text-slate-300 space-y-2">
+            <li>Developed backend CRUD modules and web services with Spring Boot for internal dashboards.</li>
+            <li>Participated in sprint planning, production debugging, and code reviews with senior engineers.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="mt-14">
+      <div class="flex items-center gap-2">
+        <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+        </svg>
+        <h2 class="text-2xl md:text-3xl font-semibold">Projects</h2>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass rounded-3xl p-7 hover-lift">
+          <div class="text-xl font-semibold">SupplementsRx AI · Knowledge Graph–Powered Health Agent</div>
+          <div class="mt-1 text-slate-400 text-sm">Python · Neo4j · GraphRAG · Llama-3 (Ollama) · FAISS</div>
+          <p class="mt-4 text-slate-300 leading-relaxed">
+            Built an end-to-end GraphRAG reasoning system combining LLM inference, vector search, and Neo4j subgraph expansion to deliver citation-grounded supplement insights.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip">GraphRAG</span>
+            <span class="chip">Neo4j</span>
+            <span class="chip">FAISS</span>
+            <span class="chip">Transformers</span>
+            <span class="chip">NLP</span>
+          </div>
+        </div>
+
+        <div class="glass rounded-3xl p-7 hover-lift">
+          <div class="text-xl font-semibold">Distributed Media Streaming Database System</div>
+          <div class="mt-1 text-slate-400 text-sm">Python · CockroachDB · RAFT · Elasticsearch/OpenSearch</div>
+          <p class="mt-4 text-slate-300 leading-relaxed">
+            Designed a simplified Spanner-inspired distributed SQL system with sharding, query routing, and RAFT-based coordination; added structured logging indexed in Elasticsearch/OpenSearch for fast debugging.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip">RAFT</span>
+            <span class="chip">Sharding</span>
+            <span class="chip">Concurrency</span>
+            <span class="chip">Elasticsearch</span>
+            <span class="chip">Distributed SQL</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="mt-14">
+      <div class="flex items-center gap-2">
+        <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+        <h2 class="text-2xl md:text-3xl font-semibold">Skills</h2>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass rounded-3xl p-6 hover-lift">
+          <div class="text-lg font-semibold">Languages</div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip">Java</span><span class="chip">C++</span><span class="chip">Python</span><span class="chip">SQL</span>
+            <span class="chip">JavaScript</span><span class="chip">R</span><span class="chip">MATLAB</span><span class="chip">HTML/CSS</span>
+          </div>
+        </div>
+
+        <div class="glass rounded-3xl p-6 hover-lift">
+          <div class="text-lg font-semibold">Frameworks / Libraries</div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip">Spring Boot</span><span class="chip">Spring MVC</span><span class="chip">React.js</span>
+            <span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Scikit-learn</span><span class="chip">OpenCV</span>
+          </div>
+        </div>
+
+        <div class="glass rounded-3xl p-6 hover-lift">
+          <div class="text-lg font-semibold">Tools / Databases</div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">Neo4j</span>
+            <span class="chip">Elasticsearch</span><span class="chip">CockroachDB</span><span class="chip">Oracle SQL / TOAD</span>
+            <span class="chip">Docker</span><span class="chip">Postman</span><span class="chip">Git</span><span class="chip">Linux</span>
+            <span class="chip">AWS</span><span class="chip">GCP</span>
+          </div>
+        </div>
+
+        <!-- AI skills (added from resume) -->
+        <div class="glass rounded-3xl p-6 hover-lift lg:col-span-3">
+          <div class="text-lg font-semibold">AI / ML</div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip">Machine Learning</span>
+            <span class="chip">Deep Learning</span>
+            <span class="chip">NLP</span>
+            <span class="chip">Transformers</span>
+            <span class="chip">Retrieval-Augmented Generation (RAG)</span>
+            <span class="chip">Knowledge Graphs</span>
+            <span class="chip">GraphRAG</span>
+            <span class="chip">Vector Search (FAISS)</span>
+            <span class="chip">Computer Vision (OpenCV)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements" class="mt-14">
+      <div class="flex items-center gap-2">
+        <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 6H5a2 2 0 0 0 0 4h2M17 6h2a2 2 0 0 1 0 4h-2"/>
+        </svg>
+        <h2 class="text-2xl md:text-3xl font-semibold">Achievements</h2>
+      </div>
+
+      <div class="mt-6 glass rounded-3xl p-7 hover-lift">
+        <ul class="list-disc list-inside text-slate-300 space-y-2">
+          <li>Won 1st place in Scintilla’19, organized by the Electrical Engineering Students Association, leading a team of 8.</li>
+          <li>Silver Medalist in the State Street Chess Tournament, ranking among 50+ participants (chess.com: RobustStar9, 1737).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mt-14">
+      <div class="flex items-center gap-2">
+        <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6" />
+        </svg>
+        <h2 class="text-2xl md:text-3xl font-semibold">Contact</h2>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a class="glass rounded-3xl p-6 hover-lift block" href="mailto:naitikg2910@gmail.com">
+          <div class="text-slate-400 text-sm">Email</div>
+          <div class="mt-1 text-slate-100">naitikg2910@gmail.com</div>
+        </a>
+
+        <a class="glass rounded-3xl p-6 hover-lift block" href="tel:+16232919648">
+          <div class="text-slate-400 text-sm">Phone</div>
+          <div class="mt-1 text-slate-100">+1 (623) 291-9648</div>
+        </a>
+
+        <a class="glass rounded-3xl p-6 hover-lift block" href="https://linkedin.com/in/naitikgandhi/" target="_blank" rel="noopener noreferrer">
+          <div class="text-slate-400 text-sm">LinkedIn</div>
+          <div class="mt-1 text-slate-100">linkedin.com/in/naitikgandhi</div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="mt-16 text-center text-slate-500 text-sm">
+      © <span id="year"></span> Naitik Gandhi
+    </footer>
+  </main>
+
+  <script>
+    // mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (!id || id === '#') return;
+        const el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        mobileMenu.classList.add('hidden');
+        el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // subtle entrance animations
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('section').forEach((section) => {
+      gsap.from(section, {
+        opacity: 0,
+        y: 28,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 82%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    });
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
