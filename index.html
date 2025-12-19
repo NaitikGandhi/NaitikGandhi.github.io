@@ -19,50 +19,39 @@
       --stroke2:#ffffff24;
       --text:#e7ecff;
       --muted:#a8b3d4;
-      --accent:#7aa2ff;
-      --accent2:#a78bfa;
     }
-
     html,body{height:100%}
     body{
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 50% -10%, #17255455 0%, transparent 60%),
-                  radial-gradient(900px 700px at 80% 20%, #4c1d9550 0%, transparent 55%),
-                  radial-gradient(1000px 800px at 20% 35%, #0ea5e930 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      background: linear-gradient(180deg, var(--bg0), var(--bg1));
       color: var(--text);
       overflow-x:hidden;
     }
 
-    /* subtle animated "code" background */
+    /* live wallpaper canvas */
+    #wallpaper {
+      position: fixed;
+      inset: 0;
+      z-index: -5;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: radial-gradient(1200px 600px at 50% -10%, #17255455 0%, transparent 60%),
+                  radial-gradient(900px 700px at 80% 20%, #4c1d9550 0%, transparent 55%),
+                  radial-gradient(1000px 800px at 20% 35%, #0ea5e930 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    /* subtle grid overlay */
     .bg-grid{
-      position:fixed; inset:0; z-index:-3;
+      position:fixed; inset:0; z-index:-4;
       background-image:
         linear-gradient(to right, #ffffff08 1px, transparent 1px),
         linear-gradient(to bottom, #ffffff08 1px, transparent 1px);
       background-size: 64px 64px;
       mask-image: radial-gradient(600px 300px at 50% 10%, #000 35%, transparent 70%);
       opacity:.35;
-    }
-
-    .symbols{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
-      opacity:.22;
-      filter: blur(0px);
-    }
-    .sym{
-      position:absolute;
-      font-weight:600;
-      color:#c7d2fe;
-      opacity:.18;
-      animation: floaty linear infinite;
-      text-shadow: 0 0 18px rgba(122,162,255,.15);
-      user-select:none;
-      white-space:nowrap;
-    }
-    @keyframes floaty{
-      from{ transform: translate3d(0, 18px, 0); }
-      to  { transform: translate3d(0, -28px, 0); }
+      pointer-events:none;
     }
 
     .glass{
@@ -79,7 +68,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* Hover lift (kept), NO pointer glow */
     .hover-lift{
       transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
       will-change: transform;
@@ -127,9 +115,7 @@
       color:#0b1220;
       font-weight: 600;
     }
-    .btn-primary:hover{
-      filter: brightness(1.05);
-    }
+    .btn-primary:hover{ filter: brightness(1.05); }
 
     .logo-pill{
       height: 56px;
@@ -140,43 +126,28 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      gap: 10px;
       overflow:hidden;
     }
     .logo-pill img{
       height: 30px;
       width: auto;
       object-fit: contain;
-      image-rendering: -webkit-optimize-contrast;
-      filter: none; /* keep colorful */
+      filter: none;
     }
 
-    /* Section heading icon */
     .hicon{
       width:18px; height:18px; opacity:.9;
       filter: drop-shadow(0 0 14px rgba(122,162,255,.15));
     }
 
-    /* Smooth anchor offset for fixed header */
     section{ scroll-margin-top: 90px; }
   </style>
 </head>
 
 <body class="antialiased">
-  <div class="bg-grid"></div>
+  <canvas id="wallpaper" aria-hidden="true"></canvas>
+  <div class="bg-grid" aria-hidden="true"></div>
 
-  <div class="symbols" aria-hidden="true" id="symbols">
-    <div class="sym" style="left:6%; top:14%; font-size:18px; animation-duration:5.8s">{ }</div>
-    <div class="sym" style="left:18%; top:72%; font-size:22px; animation-duration:6.6s">;</div>
-    <div class="sym" style="left:28%; top:22%; font-size:20px; animation-duration:7.2s">&lt;/&gt;</div>
-    <div class="sym" style="left:42%; top:64%; font-size:18px; animation-duration:6.1s">()</div>
-    <div class="sym" style="left:54%; top:18%; font-size:22px; animation-duration:7.9s">=&gt;</div>
-    <div class="sym" style="left:66%; top:72%; font-size:18px; animation-duration:5.9s">[]</div>
-    <div class="sym" style="left:78%; top:26%; font-size:22px; animation-duration:7.0s">#</div>
-    <div class="sym" style="left:88%; top:66%; font-size:18px; animation-duration:6.8s">&&</div>
-  </div>
-
-  <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50">
     <div class="mx-auto max-w-6xl px-5">
       <div class="mt-4 glass rounded-2xl px-4 py-3 flex items-center justify-between">
@@ -189,7 +160,6 @@
           <a class="hover:text-white transition" href="#experience">Experience</a>
           <a class="hover:text-white transition" href="#projects">Projects</a>
           <a class="hover:text-white transition" href="#skills">Skills</a>
-          <a class="hover:text-white transition" href="#achievements">Achievements</a>
           <a class="hover:text-white transition" href="#contact">Contact</a>
         </nav>
 
@@ -206,7 +176,6 @@
           <a class="hover:text-white transition" href="#experience">Experience</a>
           <a class="hover:text-white transition" href="#projects">Projects</a>
           <a class="hover:text-white transition" href="#skills">Skills</a>
-          <a class="hover:text-white transition" href="#achievements">Achievements</a>
           <a class="hover:text-white transition" href="#contact">Contact</a>
         </div>
       </div>
@@ -214,7 +183,6 @@
   </header>
 
   <main id="top" class="mx-auto max-w-6xl px-5 pt-28 pb-20">
-    <!-- Hero -->
     <section class="mt-3">
       <div class="glass rounded-3xl px-6 py-14 md:px-12 md:py-16">
         <div class="text-center max-w-3xl mx-auto">
@@ -223,10 +191,9 @@
           </h1>
 
           <p class="mt-5 text-lg md:text-xl text-slate-300">
-            Software Engineer | Backend, Distributed Systems, AI/ML | MS CS @ ASU
+            Software Engineer | Backend, Distributed Systems, AI/ML | MS CS @ Arizona State University
           </p>
 
-          <!-- Logos (no text beside logos) -->
           <div class="mt-8 flex flex-col md:flex-row items-center justify-center gap-3">
             <div class="logo-pill hover-lift w-full md:w-[220px]">
               <img src="ASU-logo.png" alt="Arizona State University logo" />
@@ -249,13 +216,12 @@
           </div>
 
           <div class="mt-10 text-sm text-slate-400">
-            Building reliable services • Distributed systems • Graph + LLM apps
+            building reliable services • distributed systems • graph + LLM apps
           </div>
         </div>
       </div>
     </section>
 
-    <!-- About -->
     <section id="about" class="mt-14">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div class="md:col-span-4 glass rounded-3xl p-5 hover-lift">
@@ -288,7 +254,6 @@
       </div>
     </section>
 
-    <!-- Experience -->
     <section id="experience" class="mt-14">
       <div class="flex items-center gap-2">
         <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -349,7 +314,6 @@
       </div>
     </section>
 
-    <!-- Projects -->
     <section id="projects" class="mt-14">
       <div class="flex items-center gap-2">
         <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -391,7 +355,6 @@
       </div>
     </section>
 
-    <!-- Skills -->
     <section id="skills" class="mt-14">
       <div class="flex items-center gap-2">
         <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -427,7 +390,6 @@
           </div>
         </div>
 
-        <!-- AI skills (added from resume) -->
         <div class="glass rounded-3xl p-6 hover-lift lg:col-span-3">
           <div class="text-lg font-semibold">AI / ML</div>
           <div class="mt-4 flex flex-wrap gap-2">
@@ -435,7 +397,7 @@
             <span class="chip">Deep Learning</span>
             <span class="chip">NLP</span>
             <span class="chip">Transformers</span>
-            <span class="chip">Retrieval-Augmented Generation (RAG)</span>
+            <span class="chip">RAG</span>
             <span class="chip">Knowledge Graphs</span>
             <span class="chip">GraphRAG</span>
             <span class="chip">Vector Search (FAISS)</span>
@@ -445,25 +407,6 @@
       </div>
     </section>
 
-    <!-- Achievements -->
-    <section id="achievements" class="mt-14">
-      <div class="flex items-center gap-2">
-        <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4z"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M7 6H5a2 2 0 0 0 0 4h2M17 6h2a2 2 0 0 1 0 4h-2"/>
-        </svg>
-        <h2 class="text-2xl md:text-3xl font-semibold">Achievements</h2>
-      </div>
-
-      <div class="mt-6 glass rounded-3xl p-7 hover-lift">
-        <ul class="list-disc list-inside text-slate-300 space-y-2">
-          <li>Won 1st place in Scintilla’19, organized by the Electrical Engineering Students Association, leading a team of 8.</li>
-          <li>Silver Medalist in the State Street Chess Tournament, ranking among 50+ participants (chess.com: RobustStar9, 1737).</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Contact -->
     <section id="contact" class="mt-14">
       <div class="flex items-center gap-2">
         <svg class="hicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -515,7 +458,7 @@
       });
     });
 
-    // subtle entrance animations
+    // entrance animations
     gsap.registerPlugin(ScrollTrigger);
     gsap.utils.toArray('section').forEach((section) => {
       gsap.from(section, {
@@ -531,8 +474,109 @@
       });
     });
 
-    // year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // live wallpaper (particles + connecting lines)
+    const canvas = document.getElementById('wallpaper');
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    let w, h, dpr;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = Math.floor(window.innerWidth);
+      h = Math.floor(window.innerHeight);
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const COUNT = prefersReduced ? 28 : 70;
+    const LINK_DIST = prefersReduced ? 110 : 140;
+
+    const particles = Array.from({length: COUNT}).map(() => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * (prefersReduced ? 0.25 : 0.55),
+      vy: (Math.random() - 0.5) * (prefersReduced ? 0.25 : 0.55),
+      r: Math.random() * 1.6 + 0.8
+    }));
+
+    let mouse = { x: w * 0.5, y: h * 0.5 };
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    function step(){
+      ctx.clearRect(0, 0, w, h);
+
+      // vignette overlay (soft)
+      const grad = ctx.createRadialGradient(w*0.5, h*0.15, 60, w*0.5, h*0.15, Math.max(w,h));
+      grad.addColorStop(0, 'rgba(122,162,255,0.10)');
+      grad.addColorStop(0.4, 'rgba(167,139,250,0.06)');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,w,h);
+
+      // update
+      for (const p of particles){
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // gentle mouse attract
+        const dx = mouse.x - p.x, dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+        if (!prefersReduced && dist < 240){
+          p.vx += (dx / dist) * 0.0025;
+          p.vy += (dy / dist) * 0.0025;
+        }
+
+        // damping
+        p.vx *= 0.995;
+        p.vy *= 0.995;
+
+        // bounds
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+      }
+
+      // lines
+      for (let i=0;i<particles.length;i++){
+        for (let j=i+1;j<particles.length;j++){
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < LINK_DIST){
+            const alpha = (1 - d / LINK_DIST) * (prefersReduced ? 0.18 : 0.22);
+            ctx.strokeStyle = `rgba(160,190,255,${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // dots
+      for (const p of particles){
+        ctx.fillStyle = 'rgba(210,225,255,0.55)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(step);
+    }
+    step();
   </script>
 </body>
 </html>
